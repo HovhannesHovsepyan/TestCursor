@@ -17,7 +17,7 @@ provider "render" {
 resource "render_service" "web_app" {
   name = "ci-demo-app"                                 # Service name
   type = "web_service"                                 # Type of service
-  repo = "https://github.com/HovhannesHovsepyan/YOUR-REPO"  # Source repo
+  repo = "https://github.com/HovhannesHovsepyan/TestCursor"  # Source repo
   env = "docker"                                       # Use Docker environment
   plan = "starter"                                     # Free tier plan
   branch = "main"                                      # Deploy from main branch
