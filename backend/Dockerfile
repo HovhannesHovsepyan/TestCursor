@@ -3,13 +3,13 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy dependency files and install dependencies first for better caching
-COPY backend/package.json ./
-COPY backend/package-lock.json ./
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm ci
 
 # Copy the rest of the source code
-COPY backend/index.ts ./
-COPY backend/tsconfig.json ./
+COPY index.ts ./
+COPY tsconfig.json ./
 
 # Build the application
 RUN npm run build
