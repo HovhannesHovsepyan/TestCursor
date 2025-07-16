@@ -1,0 +1,17 @@
+{
+  "name": "testcursor",
+  "version": "1.0.0",
+  "description": "This repository is organized into the following main folders:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\"",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
+}
