@@ -1,0 +1,27 @@
+# Resource-optimized deployment manifest
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp  # Name of the deployment
+spec:
+  replicas: 1   # Single replica to save resources
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: app
+          image: myapp:latest
+          resources:
+            # Set minimal resource requests
+            requests:
+              memory: "64Mi"   # Request only 64MB memory
+              cpu: "50m"       # Request only 5% of a CPU core
+            # Set reasonable limits
+            limits:
+              memory: "128Mi"  # Limit to 128MB memory
+              cpu: "100m"      # Limit to 10% of a CPU core

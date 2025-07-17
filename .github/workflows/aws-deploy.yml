@@ -1,0 +1,38 @@
+# GitHub Action workflow for deploying to AWS
+name: AWS Deployment
+
+on:
+  push:
+    branches:
+      - master  # Deploy on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3  # Check out code
+
+      # Set up AWS credentials from GitHub secrets
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      # Build the Docker image
+      - name: Build Docker Image
+        run: docker build -t myapp .
+
+      # Push the image to AWS ECR
+      - name: Push Docker Image to ECR
+        run: |
+          # Create repository if it doesn't exist (ignoring errors if it does)
+          aws ecr create-repository --repository-name myapp || true
+
+          # Login to ECR
+          aws ecr get-login-password | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
+
+          # Tag and push the image
+          docker tag myapp:latest 836568447446.dkr.ecr.eu-north-1.amazonaws.com/myapp:latest
+          docker push 836568447446.dkr.ecr.us-east-1.amazonaws.com/myapp:latest
